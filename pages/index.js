@@ -2,7 +2,15 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home(data) {
+  const serverData = JSON.parse(data);
+
+  const [time, setTime] = useState<Date | null>(null);
+  useEffect(() => {
+      fetch('/api/time')
+      .then(res => res.json())
+      .then(json => setTime(new Date(json.time)));
+  }, []);
   return (
     <div className={styles.container}>
       <Head>
@@ -12,6 +20,10 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <h1 className={styles.title}>
+          Welcome to <a href="https://nextjs.org">Next.js! The time is {serverData.time}</a>
+        </h1>
+
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
