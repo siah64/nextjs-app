@@ -2,6 +2,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
+export async function getServerSideProps() {
+  const data = JSON.stringify({ time: new Date() });
+  return { props: { data } };
+}
+
 export default function Home(data) {
   const serverData = JSON.parse(data);
 
@@ -20,9 +25,14 @@ export default function Home(data) {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js! The time is {serverData.time}</a>
-        </h1>
+      <h1 className={styles.title}>
+                Welcome to{" "}
+                <a href="https://nextjs.org">
+                    Next.js!{" "}
+                    {time &&
+                    `The time is ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`}
+                </a>
+                </h1>
 
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
