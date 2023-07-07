@@ -1,16 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import React, { useEffect, useState } from "react";
 
-export async function getServerSideProps() {
-  const data = JSON.stringify({ time: new Date() });
-  return { props: { data } };
-}
 
-export default function Home(data) {
-  const serverData = JSON.parse(data);
+export default function Home() {
 
-  const [time, setTime] = useState<Date | null>(null);
+  const [time, setTime] = useState(null);
   useEffect(() => {
       fetch('/api/time')
       .then(res => res.json())
